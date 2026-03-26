@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giải Mã Sách Online - Chương Ba (Nâng Cao)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@600&family=Quicksand:wght@500&display=swap');
+
+        :root {
+            --paper: #f4ecd8;
+            --leather: #3d2b1f;
+            --ink: #1a1a1a;
+            --royal-red: #8b0000;
+            --gold: #d4af37;
+        }
+
+        body {
+            margin: 0;
+            background: #121212;
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            height: 90vh;
+            background: var(--paper);
+            position: relative;
+            border: 12px solid var(--leather);
+            border-radius: 30px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.2);
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .top-left { position: absolute; top: 10px; left: 10px; border-top: 3px solid var(--gold); border-left: 3px solid var(--gold); width: 30px; height: 30px; }
+        .bottom-right { position: absolute; bottom: 10px; right: 10px; border-bottom: 3px solid var(--gold); border-right: 3px solid var(--gold); width: 30px; height: 30px; }
+
+        .page { display: none; padding: 30px 20px; animation: pageIn 0.6s ease-out; }
+        @keyframes pageIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .header-title {
+            font-family: 'Cormorant Upright', serif;
+            font-size: 1.6rem;
+            color: var(--royal-red);
+            text-align: center;
+            border-bottom: 2px double var(--gold);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .menu-item {
+            background: linear-gradient(to right, #e2d1b0, #f4ecd8);
+            border: 1px solid var(--gold);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+        .menu-item:hover { transform: scale(1.02); background: var(--gold); color: white; }
+
+        .so-văn-bản {
+            width: 100%;
+            border: none;
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid var(--ink);
+            font-family: inherit;
+            font-size: 1rem;
+            padding: 10px;
+            margin-top: 10px;
+            resize: none;
+            outline: none;
+        }
+
+        .ink-reveal {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(139, 0, 0, 0.05);
+            border-radius: 10px;
+            color: var(--royal-red);
+            font-style: italic;
+            animation: inkSpread 1s ease-in;
+        }
+        @keyframes inkSpread { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
+
+        .btn-action {
+            background: var(--royal-red);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            box-shadow: 0 4px 0 #5a0000;
+        }
+
+        .quiz-card { background: white; padding: 15px; border-radius: 10px; border: 1px solid var(--gold); margin-bottom: 20px; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+        .quiz-option { background: #fdfdfd; border: 1px solid #ccc; padding: 12px; margin: 8px 0; border-radius: 5px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
+        
+        .fill-blank { border: none; border-bottom: 2px solid var(--gold); background: transparent; width: 110px; text-align: center; font-weight: bold; color: var(--royal-red); font-family: inherit; font-size: 0.95rem; }
+
+        .correct { background: #d4edda !important; border-color: #28a745 !important; animation: bounce 0.4s; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545 !important; animation: shake 0.3s; }
+
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="top-left"></div>
+    <div class="bottom-right"></div>
+
+    <div id="splash" class="page" style="display: block; text-align: center; padding-top: 100px;">
+        <div style="font-size: 4rem; color: var(--gold); margin-bottom: 20px;">📜</div>
+        <h1 class="header-title" style="border:none">GIẢI MÃ SÁCH ONLINE</h1>
+        <p style="letter-spacing: 2px; font-weight: bold;">CHƯƠNG TRỌNG ĐIỂM: BA</p>
+        <button class="btn-action" onclick="nav('menu', 'start')">VÀO HÀNH TRÌNH</button>
+    </div>
+
+    <div id="menu" class="page">
+        <h2 class="header-title">Chương Ba: Hành trình cuộc đời của nhà bác học</h2>
+        <div class="menu-item" onclick="nav('lesson', 'flip')">
+            <span style="font-size: 1.5rem; margin-right: 15px;">✒️</span>
+            <b>Mục 1: Tự luận cuộc đời</b>
+        </div>
+        <div class="menu-item" onclick="nav('exercise', 'flip')">
+            <span style="font-size: 1.5rem; margin-right: 15px;">🏹</span>
+            <b>Mục 2: Đại khảo hạch (Mở rộng)</b>
+        </div>
+    </div>
+
+    <div id="lesson" class="page">
+        <button onclick="nav('menu', 'flip')" style="background:none; border:none; color:var(--gold); cursor:pointer; font-weight:bold;">◀ Quay lại</button>
+        
+        <p><b>Câu 1: Thiết kế sơ đồ tư duy về cuộc đời của Lê Quý Đôn?</b></p>
+        <textarea class="so-văn-bản" rows="3" placeholder="Sĩ tử hạ bút phác thảo..."></textarea>
+        <button class="btn-action" onclick="reveal('ans1')">XEM GỢI Ý ĐÁP ÁN</button>
+        <div id="ans1" class="ink-reveal">
+            <b>Gợi ý:</b> Sơ đồ nên có 4 nhánh chính: 1. Thân thế (Làng Diên Hà, cha TS Lê Phú Thứ); 2. Khoa cử (Thần đồng, Bảng nhãn); 3. Quan trường (Sứ giả, Bồi tụng, Tổng đốc); 4. Sự nghiệp văn chương (Bách khoa toàn thư).
+        </div>
+
+        <p style="margin-top:25px;"><b>Câu 2: Trình bày những mốc thời gian quan trọng gắn với cuộc đời của Lê Quý Đôn?</b></p>
+        <textarea class="so-văn-bản" rows="3" placeholder="Ghi chép mốc thời gian..."></textarea>
+        <button class="btn-action" onclick="reveal('ans2')">HIỆN ĐÁP ÁN</button>
+        <div id="ans2" class="ink-reveal">
+            <b>Đáp án:</b> 1726: Sinh ra; 1752: Đỗ Bảng nhãn; 1760-1762: Đi sứ nhà Thanh; 1773: Giữ chức Bồi tụng; 1784: Mất tại Hà Nam ở tuổi 58.
+        </div>
+
+        <p style="margin-top:25px;"><b>Câu 3: Nhận xét về cuộc đời của Lê Quý Đôn bằng một đoạn văn ngắn?</b></p>
+        <textarea class="so-văn-bản" rows="3" placeholder="Viết nhận xét của sĩ tử..."></textarea>
+        <button class="btn-action" onclick="reveal('ans3')">HIỆN ĐÁP ÁN</button>
+        <div id="ans3" class="ink-reveal">
+            <b>Đáp án:</b> Lê Quý Đôn là hiện thân của trí tuệ Việt Nam thế kỷ XVIII. Cuộc đời ông là sự kết hợp hiếm có giữa một trí thức uyên bác, một nhà ngoại giao tài ba và một quan lại tận tâm, để lại di sản văn hóa khổng lồ cho hậu thế.
+        </div>
+    </div>
+
+    <div id="exercise" class="page">
+        <button onclick="nav('menu', 'flip')" style="background:none; border:none; color:var(--gold); cursor:pointer; font-weight:bold;">◀ Quay lại</button>
+        <h3 style="color:var(--royal-red); text-align:center;">HÀNH TRÌNH TỪ SINH RA ĐẾN KHI MẤT</h3>
+
+        <div class="quiz-card">
+            <p><b>Câu 1 (Đục lỗ):</b> "Lê Quý Đôn sinh ra tại làng <input type="text" id="b1" class="fill-blank" placeholder="...">, nay thuộc tỉnh Thái Bình."</p>
+            <button class="btn-action" style="padding:5px;" onclick="checkB('b1', 'Diên Hà')">Kiểm tra</button>
+        </div>
+
+        <div class="quiz-card">
+            <p><b>Câu 2 (Đục lỗ):</b> "Ông qua đời vào năm <input type="text" id="b2" class="fill-blank" placeholder="..."> tại quê mẹ tỉnh Hà Nam."</p>
+            <button class="btn-action" style="padding:5px;" onclick="checkB('b2', '1784')">Kiểm tra</button>
+        </div>
+
+        <div class="quiz-card">
+            <p><b>Câu 3: Trong chuyến đi sứ năm 1760, ông đã gây kinh ngạc cho các quan lại nhà Thanh bởi điều gì?</b></p>
+            <div class="quiz-option" onclick="ans(this, true)">Sự uyên bác và tài văn chương</div>
+            <div class="quiz-option" onclick="ans(this, false)">Tài võ nghệ xuất chúng</div>
+            <div class="quiz-option" onclick="ans(this, false)">Khả năng giao thương hàng hóa</div>
+        </div>
+
+        <div class="quiz-card">
+            <p><b>Câu 4: Lê Quý Đôn từng giữ chức Tổng đốc Nghệ An và Bồi tụng (Phó Thủ tướng). Đúng hay Sai?</b></p>
+            <div class="quiz-option" onclick="ans(this, true)">ĐÚNG</div>
+            <div class="quiz-option" onclick="ans(this, false)">SAI</div>
+        </div>
+
+        <div class="quiz-card">
+            <p><b>Câu 5: Suốt cuộc đời làm quan, Lê Quý Đôn nổi tiếng là người lười ghi chép thực tế. Đúng hay Sai?</b></p>
+            <div class="quiz-option" onclick="ans(this, false)">ĐÚNG</div>
+            <div class="quiz-option" onclick="ans(this, true)">SAI (Ông ghi chép cực kỳ tỉ mỉ)</div>
+        </div>
+
+        <div class="quiz-card">
+            <p><b>Câu 6: Sau khi qua đời, ông được triều đình truy tặng chức vụ gì cao quý?</b></p>
+            <div class="quiz-option" onclick="ans(this, true)">Công bộ Thượng thư</div>
+            <div class="quiz-option" onclick="ans(this, false)">Đại Nguyên Soái</div>
+            <div class="quiz-option" onclick="ans(this, false)">Thái sư</div>
+        </div>
+    </div>
+</div>
+
+<audio id="sfx-start" src="https://www.soundjay.com/misc/sounds/hand-bell-1.mp3"></audio>
+<audio id="sfx-flip" src="https://www.soundjay.com/misc/sounds/paper-flip-1.mp3"></audio>
+<audio id="sfx-correct" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+<audio id="sfx-wrong" src="https://www.soundjay.com/misc/sounds/button-10.mp3"></audio>
+
+<script>
+    function nav(id, type) {
+        if(type === 'start') document.getElementById('sfx-start').play().catch(()=>{});
+        else document.getElementById('sfx-flip').play().catch(()=>{});
+        document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        window.scrollTo(0,0);
+    }
+
+    function reveal(id) {
+        document.getElementById('sfx-correct').play().catch(()=>{});
+        document.getElementById(id).style.display = 'block';
+    }
+
+    function ans(btn, isCorrect) {
+        if (isCorrect) {
+            btn.classList.add('correct');
+            document.getElementById('sfx-correct').play().catch(()=>{});
+        } else {
+            btn.classList.add('wrong');
+            document.getElementById('sfx-wrong').play().catch(()=>{});
+            setTimeout(() => btn.classList.remove('wrong'), 500);
+        }
+    }
+
+    function checkB(id, correctVal) {
+        let val = document.getElementById(id).value.trim();
+        if(val.toLowerCase() === correctVal.toLowerCase()) {
+            document.getElementById(id).style.color = "green";
+            document.getElementById('sfx-correct').play().catch(()=>{});
+            alert("Rất chính xác!");
+        } else {
+            document.getElementById('sfx-wrong').play().catch(()=>{});
+            alert("Chưa đúng, mời sĩ tử kiểm tra lại.");
+        }
+    }
+</script>
+
+</body>
+</html>
